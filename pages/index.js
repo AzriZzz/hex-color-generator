@@ -1,82 +1,66 @@
-import Head from 'next/head'
+import Head from "next/head";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  // learn on how to useEffect
+
+  // useEffect is a hook for encapsulating code that has 'side effects,' and is like a combination of componentDidMount , componentDidUpdate , and componentWillUnmount . Previously, functional components didn't have access to the component life cycle, but with useEffect you can tap into it.
+
+  const [backgroundRandomize, setBackgroundRandomize] = useState("");
+
+  const randomize = () => {
+    const hex_numbers = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F",
+    ];
+    let hexcode1 = "";
+    let hexcode2 = "";
+    let random_index = 0;
+
+    // randomize direction
+    const linearDirection = ['', 'to right,', 'to bottom right,' ]
+    const directionIndex = Math.floor(Math.random() * linearDirection.length)
+
+    //randomize hex code
+    for (let i = 0; i < 6; i++) {
+      random_index = Math.floor(Math.random() * hex_numbers.length);
+      hexcode1 += hex_numbers[random_index];
+
+      random_index = Math.floor(Math.random() * hex_numbers.length);
+      hexcode2 += hex_numbers[random_index];
+    }
+
+
+    const classRandomGradient = `linear-gradient(${linearDirection[directionIndex]} #${hexcode1}, #${hexcode2})`;
+    setBackgroundRandomize(classRandomGradient);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div
+      className="flex flex-col items-center justify-center min-h-screen py-2 "
+      style={{ background: `${backgroundRandomize}` }}
+    >
       <Head>
-        <title>Create Next App</title>
+        <title>Hex Color Generator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
+      <main className="text-center">
+        <h1 className="xl:text-[50px] xl:pb-[160px]">
+          CLICK THE BUTTON BELLOW TO GENERATE <br /> A RANDOM GRADIENT HEX COLOR
+          COMBINATION
         </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
+        <p className="pb-3 cursor-pointer xl:text-4xl xl:pb-7">
+          background:{" "}
+          {backgroundRandomize.length > 0
+            ? `${backgroundRandomize};`
+            : "linear-gradient(to right, #ffffff, #ffffff);"}
         </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => randomize()}
+          className="p-4 m-2 bg-white border-gray-400 rounded-2xl"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+          Click Here
+        </button>
+      </main>
     </div>
-  )
+  );
 }

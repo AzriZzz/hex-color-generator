@@ -1,30 +1,48 @@
-# Next.js + Tailwind CSS Example
+# Hex-color-generator
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+Make the web a little prettier with this simple hex colors application. This app changes the background color and displays that color’s hexadecimal code on the screen all on the click of a button.
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+Built on top of Next.js and Tailwind
 
-## Preview
-
-Preview the example live on [StackBlitz](http://stackblitz.com/):
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+First, run the development server:
 
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
+npm run dev
 # or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+yarn dev
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-# hex-color-generator
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+## Functionality
+
+Build a function to generate a random hex color and making it the color of the background
+
+### Logic
+```
+const hex_numbers = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F",];
+
+let hexcode1 = "";
+let hexcode2 = "";
+let random_index = 0;
+
+for (let i = 0; i < 6; i++) {
+  random_index = Math.floor(Math.random() * hex_numbers.length);
+  hexcode1 += hex_numbers[random_index];
+
+  random_index = Math.floor(Math.random() * hex_numbers.length);
+  hexcode2 += hex_numbers[random_index];
+}
+```
+
+We can go one step further to change the direction of the gradient.
+```
+const linearDirection = ['', 'to right,', 'to bottom right,' ]
+const directionIndex = Math.floor(Math.random() * linearDirection.length)
+```
+
+Then we combine all the randomize variable into a single string so we can append that into our parent background
+```
+const classRandomGradient = `linear-gradient(${linearDirection[directionIndex]} #${hexcode1}, #${hexcode2})`;
+```
